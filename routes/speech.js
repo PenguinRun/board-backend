@@ -11,10 +11,10 @@ speechModifyMethod = new SpeechModifyMethod();
 /* GET home page. */
 router.get('/', speechGetMethod.getSpeechData);
 
-router.post('/create', speechModifyMethod.createSpeechData);
+router.post('/', speechModifyMethod.createSpeechData);
 
-router.put('/update', speechModifyMethod.updateSpeechData);
+router.put('/', speechModifyMethod.updateSpeechData);
 
-router.delete('/delete', speechModifyMethod.deleteSpeechData);
+router.delete('/', speechModifyMethod.deleteSpeechData);
 
 module.exports = router;
