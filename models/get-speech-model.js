@@ -10,7 +10,7 @@ module.exports = createSpeech = () => {
         docClient.scan(params, (err, data) => {
             // console.log("data: " + data);
             if (!err) {
-                resolve(data);
+                resolve(data.Items);
             } else {
                 // console.log(err);
                 reject("get data error.");
