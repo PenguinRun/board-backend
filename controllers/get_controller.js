@@ -14,22 +14,12 @@ module.exports = class SpeechGetMethod {
             })
         } else {
             if (checkOriginAllowed(reqOrigin, allowOrigin)) {
-                res.setHeader("Access-Control-Allow-Origin", reqOrigin);
-                res.setHeader('Access-Control-Allow-Credentials', true);
-                res.setHeader('Access-Control-Allow-Methods', 'GET');
-                res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, x-access-token')
-                next();
             } else {
                 res.json({
                     err: 'error request.'
                 })
-            }
+            }e
             getSpeech().then((result) => {
-                // res.setHeader('Access-Control-Allow-Origin', '*');
-                // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
-                // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, x-access-token')
-                // res.setHeader('Access-Control-Allow-Credentials', true)
-                // Add headers
                 res.json({
                     result: result
                 })
