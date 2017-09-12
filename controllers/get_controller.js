@@ -5,50 +5,35 @@ const getSpeech = require('../models/get-speech-model');
 module.exports = class SpeechGetMethod {
     //讀取speech table資料
     getSpeechData(req, res, next) {
-        let reqOrigin = req.headers.origin;
-        // console.log("reqOrigin: " + reqOrigin);
-
-        if (reqOrigin === undefined) {
+        getSpeech().then((result) => {
             res.json({
-                err: 'error request.'
+                result: result
             })
-        } else {
-            if (checkOriginAllowed(reqOrigin, allowOrigin)) {
-            } else {
-                res.json({
-                    err: 'error request.'
-                })
-            }e
-            getSpeech().then((result) => {
-                res.json({
-                    result: result
-                })
-            }, (err) => {
-                res.json({
-                    err: err
-                })
+        }, (err) => {
+            res.json({
+                err: err
             })
-        }
+        })
     }
 }
 
 const checkOriginAllowed = (origin, allowedOrigin) => {
-  if (_.isArray(allowedOrigin)) {
-      for (let i = 0; i < allowedOrigin.length; i++) {
-          if (checkOriginAllowed(origin, allowedOrigin[i])) {
-              return true;
-          }
-      }
-      return false;
-  } else if (_.isString(allowedOrigin)) {
-      return origin === allowedOrigin;
-  } else if (allowedOrigin instanceof RegExp) {
-      return allowedOrigin.test(origin);
-  } else {
-      return !!allowedOrigin;
-  }
+    if (_.isArray(allowedOrigin)) {
+        for (let i = 0; i < allowedOrigin.length; i++) {
+            if (checkOriginAllowed(origin, allowedOrigin[i])) {
+                return true;
+            }
+        }
+        return false;
+    } else if (_.isString(allowedOrigin)) {
+        return origin === allowedOrigin;
+    } else if (allowedOrigin instanceof RegExp) {
+        return allowedOrigin.test(origin);
+    } else {
+        return !!allowedOrigin;
+    }
 }
 
 const allowOrigin = [
-  'devche.com'
+    'devche.com'
 ]
