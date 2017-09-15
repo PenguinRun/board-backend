@@ -7,7 +7,6 @@ module.exports = createSpeech = (deleteData) => {
         const deleteParams = {
             TableName: "speech",
             Key: {
-                "speaker": deleteData.speaker,
                 "create_date": deleteData.create_date,
             }
         };

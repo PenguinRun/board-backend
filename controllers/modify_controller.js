@@ -43,7 +43,6 @@ module.exports = class SpeechModifyMethod {
     //刪除speech table資料
     deleteSpeechData(req, res) {
         const deleteData = {
-            "speaker": req.body.speaker,
             "create_date": req.body.create_date,
         }
         deleteSpeech(deleteData).then((result) => {
