@@ -17,22 +17,30 @@ module.exports = createSpeech = (insertData) => {
                 "create_date": insertData.create_date,
             }
         };
-        docClient.scan(params, (err, data) => {
-            // console.log("data: " + data);
-            //若超過五筆就不給予新增
-            if (data.Count >= 5) {
-                reject("sorry, the data is more than 5.");
+        docClient.put(inputParams, (err, data) => {
+            if (!err) {
+                resolve("create sucessful");
             } else {
-                docClient.put(inputParams, (err, data) => {
-                    if (!err) {
-                        resolve("create sucessful");
-                    } else {
-                        // console.log(err);
-                        reject("create error");
-                    }
-                });
+                // console.log(err);
+                reject("create error");
             }
         });
+        // docClient.scan(params, (err, data) => {
+        //     // console.log("data: " + data);
+        //     //若超過五筆就不給予新增
+        //     if (data.Count >= 5) {
+        //         reject("sorry, the data is more than 5.");
+        //     } else {
+        //         docClient.put(inputParams, (err, data) => {
+        //             if (!err) {
+        //                 resolve("create sucessful");
+        //             } else {
+        //                 // console.log(err);
+        //                 reject("create error");
+        //             }
+        //         });
+        //     }
+        // });
     })
 }
 
