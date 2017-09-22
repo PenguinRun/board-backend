@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-const SpeechGetMethod = require('../controllers/get_controller');
-const SpeechModifyMethod = require('../controllers/modify_controller')
+const SpeechGetMethod = require('../controllers/speech/get_controller');
+const SpeechModifyMethod = require('../controllers/speech/modify_controller')
 
 speechGetMethod = new SpeechGetMethod();
 speechModifyMethod = new SpeechModifyMethod();

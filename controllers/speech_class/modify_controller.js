@@ -1,19 +1,18 @@
-const createSpeech = require('../models/create-speech-model');
-const updateSpeech = require('../models/update-speech-model');
-const deleteSpeech = require('../models/delete-speech-model');
+const createSpeechClass = require('../../models/speech_class/create_class_model');
+const updateSpeechClass = require('../../models/speech_class/update_class_model');
+const deleteSpeechClass = require('../../models/speech_class/delete_class_model');
 
 //another Method.(just like POST, PUT and DELETE)
-module.exports = class SpeechModifyMethod {
-    //建立speech table資料
-    createSpeechData(req, res) {
+module.exports = class SpeechClassModifyMethod {
+    //建立speech class table資料
+    createSpeechClassData(req, res) {
         const insertData = {
-            "speaker": req.body.speaker,
-            "title": req.body.title,
-            "message": req.body.message,
-            "speech_date": req.body.speech_date,
+            "name": req.body.name,
+            "img_url": req.body.img_url,
             "create_date": onTime(),
+            "update_date": null
         }
-        createSpeech(insertData).then((result) => {
+        createSpeechClass(insertData).then((result) => {
             res.json({
                 result: result
             })
@@ -23,16 +22,15 @@ module.exports = class SpeechModifyMethod {
             })
         } )
     }
-    //修改speech table資料
-    updateSpeechData(req, res) {
+    //修改speech class table資料
+    updateSpeechClassData(req, res) {
         const updateData = {
-            "speaker": req.body.speaker,
-            "title": req.body.title,
-            "message": req.body.message,
-            "speech_date": req.body.speech_date,
+            "name": req.body.name,
+            "img_url": req.body.img_url,
             "create_date": req.body.create_date,
+            "update_date": onTime()
         }
-        updateSpeech(updateData).then((result) => {
+        updateSpeechClass(updateData).then((result) => {
             res.json({
                 result: result
             })
@@ -40,12 +38,12 @@ module.exports = class SpeechModifyMethod {
             err: err
         })
     }
-    //刪除speech table資料
-    deleteSpeechData(req, res) {
+    //刪除speech class table資料
+    deleteSpeechClassData(req, res) {
         const deleteData = {
             "create_date": req.body.create_date,
         }
-        deleteSpeech(deleteData).then((result) => {
+        deleteSpeechClass(deleteData).then((result) => {
             res.json({
                 result: result
             })

@@ -1,4 +1,4 @@
-var Dynamodb = require('./db_connect.js');
+var Dynamodb = require('../../models/db_connect.js');
 var docClient = Dynamodb.docClient;
 
 module.exports = createSpeech = (insertData) => {
@@ -13,8 +13,12 @@ module.exports = createSpeech = (insertData) => {
                 "speaker": insertData.speaker,
                 "title": insertData.title,
                 "message": insertData.message,
-                "speech_date": insertData.speech_date, 
+                "speech_date": insertData.speech_date,
+                "link": insertData.link,
+                "class": insertData.class,
+                "class_img": insertData.class_img,
                 "create_date": insertData.create_date,
+                "update_date": insertData.update_date, 
             }
         };
         docClient.put(inputParams, (err, data) => {

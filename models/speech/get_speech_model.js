@@ -1,7 +1,7 @@
-var Dynamodb = require('./db_connect.js');
+var Dynamodb = require('../../models/db_connect.js');
 var docClient = Dynamodb.docClient;
 
-module.exports = createSpeech = () => {
+module.exports = getSpeech = () => {
     return new Promise((resolve, reject) => {
         //資料庫取得資料的動作
         const params = {
