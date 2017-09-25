@@ -6,12 +6,16 @@ const deleteSpeech = require('../../models/speech/delete_speech_model');
 module.exports = class SpeechModifyMethod {
     //建立speech table資料
     createSpeechData(req, res) {
+        var checkLink = req.body.link;
+        if (checkLink === "") {
+            checkLink = null
+        }
         const insertData = {
             "speaker": req.body.speaker,
             "title": req.body.title,
             "message": req.body.message,
             "speech_date": req.body.speech_date,
-            "link": req.body.link,
+            "link": checkLink,
             "class": req.body.class,
             "class_img": req.body.class_img,
             "create_date": onTime(),
@@ -25,16 +29,20 @@ module.exports = class SpeechModifyMethod {
             res.json({
                 err: err
             })
-        } )
+        })
     }
     //修改speech table資料
     updateSpeechData(req, res) {
+        var checkLink = req.body.link;
+        if (checkLink === "") {
+            checkLink = null
+        }
         const updateData = {
             "speaker": req.body.speaker,
             "title": req.body.title,
             "message": req.body.message,
             "speech_date": req.body.speech_date,
-            "link": req.body.link,
+            "link": checkLink,
             "class": req.body.class,
             "class_img": req.body.class_img,
             "create_date": req.body.create_date,
