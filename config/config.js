@@ -10,7 +10,8 @@ module.exports = {
       id: process.env.KEYID,
       sk: process.env.SKEY,
       server: process.env.REGION
-    }
+    },
+    secret: process.env.SECRETKEY,
   },
   production: {
 

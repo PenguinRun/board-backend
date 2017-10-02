@@ -2,6 +2,11 @@ var Dynamodb = require('../../models/db_connect.js');
 var docClient = Dynamodb.docClient;
 
 module.exports = createSpeech = (insertData) => {
+
+    if (insertData.link === "") {
+        insertData.link = "null"
+    }
+
     return new Promise((resolve, reject) => {
         //資料庫新建資料的動作
         const params = {
@@ -10,6 +15,7 @@ module.exports = createSpeech = (insertData) => {
         const inputParams = {
             TableName: "speech",
             Item: {
+                "id": insertData.id,
                 "speaker": insertData.speaker,
                 "title": insertData.title,
                 "message": insertData.message,

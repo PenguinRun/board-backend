@@ -4,9 +4,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
 
 var speech = require('./routes/speech');
 var speechClass = require('./routes/speech_class');
+var speechMember = require('./routes/speech_member');
 var users = require('./routes/users');
 
 var app = express();
@@ -21,6 +23,8 @@ app.use(function (req, res, next) {
 
   // Request headers you wish to allow
   res.header('Access-Control-Allow-Headers', 'Origin ,X-Requested-With, Content-Type, Accept, x-access-token')
+  
+  res.header('Access-Control-Expose-Headers', 'x-access-token')
 
   // Set to true if you need the website to include cookies in the requests sent
   // to the API (e.g. in case you use sessions)
@@ -42,8 +46,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//facebook-passport
+app.use(require('serve-static')(__dirname + '/../../public'));
+app.use(require('cookie-parser')());
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('express-session')({ secret: 'PenguinRun', resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use('/api/speech', speech);
 app.use('/api/speechclass', speechClass);
+app.use('/api/speechmember', speechMember);
 app.use('/users', users);
 
 // catch 404 and forward to error handler

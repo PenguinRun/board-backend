@@ -7,6 +7,7 @@ const SpeechClassModifyMethod = require('../controllers/speech_class/modify_cont
 speechClassGetMethod = new SpeechClassGetMethod();
 speechClassModifyMethod = new SpeechClassModifyMethod();
 
+//演講分類管理-CRUD
 
 /* GET home page. */
 router.get('/', speechClassGetMethod.getSpeechClassData);
