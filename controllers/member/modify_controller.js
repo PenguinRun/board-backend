@@ -45,9 +45,8 @@ module.exports = class ModifyMember {
             }
 
             loginCheck(loginData).then((result) => {
-                // res.header('x-access-token', token);
                 res.redirect(config.production.URL + '/#/home/?id=' + id);
-                // res.redirect(config.development.testURL + '/#/home/?id=' + id);
+                // res.redirect('http://localhost:8000/#/home/?id=' + id);
             });
         }
     }
