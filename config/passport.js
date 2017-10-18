@@ -7,7 +7,7 @@ var Strategy = require('passport-facebook').Strategy;
 passport.use(new Strategy({
     clientID: config.development.fb.number,
     clientSecret: config.development.fb.key,
-    callbackURL: config.production.URL + '/todolist/login/facebook/return',
+    callbackURL: config.production.URL + '/api/speechmember/login/facebook/return',
     // callbackURL: config.development.testURL + '/api/speechmember/login/facebook/return',
     profileFields: ['id', 'displayName', 'email', 'photos', 'gender']
   },
