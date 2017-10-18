@@ -1,3 +1,5 @@
+const config = require('../../config/config');
+
 const createSpeechClass = require('../../models/speech_class/create_class_model');
 const updateSpeechClass = require('../../models/speech_class/update_class_model');
 const deleteSpeechClass = require('../../models/speech_class/delete_class_model');

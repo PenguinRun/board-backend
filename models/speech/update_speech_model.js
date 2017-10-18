@@ -7,7 +7,9 @@ module.exports = updateSpeech = (updateData) => {
         const updateParams = {
             TableName: "speech",
             Item: {
+                "id": updateData.speaker_id,
                 "speaker": updateData.speaker,
+                "speaker_img": updateData.speaker_img,
                 "title": updateData.title,
                 "message": updateData.message,
                 "speech_date": updateData.speech_date,
@@ -22,7 +24,7 @@ module.exports = updateSpeech = (updateData) => {
             if (!err) {
                 resolve("update sucessful");
             } else {
-                // console.log(err);
+                console.log(err);
                 reject("update error");
             }
         });

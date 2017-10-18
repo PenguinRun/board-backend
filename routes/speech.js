@@ -11,6 +11,8 @@ speechModifyMethod = new SpeechModifyMethod();
 /* GET home page. */
 router.get('/', speechGetMethod.getSpeechData);
 
+router.get('/data', speechGetMethod.getSpeechDataForFrontEnd);
+
 router.post('/', speechModifyMethod.createSpeechData);
 
 router.put('/', speechModifyMethod.updateSpeechData);

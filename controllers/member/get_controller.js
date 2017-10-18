@@ -1,47 +1,79 @@
-// var memberData = require('../../models/member/login_data_model');
+const jwt = require('jsonwebtoken');
+const config = require('../../config/config');
+
+const MemberData = require('../../models/speech_member/get_member_model');
+const checkToken = require('../../service/verify');
+
+const CheckSomething = require('../../service/check.js');
 
 module.exports = class GetMember {
-    //登入動作
-    getTodoListLogin(req, res, next) {
+    //取得全部會員資料
+    getAllMemberData(req, res, next) {
+        //登入判斷
+        const token = req.headers['x-access-token'];
+        //確定token是否輸入
+        const checkSomething = new CheckSomething();
 
-        // if (req.session.passport === undefined) {
-        //     res.redirect('/todolist');
-        // } else {
-
-
-            //預設使用者權限皆為0，且todolist輸入筆數為50筆
-            var memberInfo = {
-                id: id,
-                email: email,
-                photos: photos,
-                gender: gender,
-                displayName: displayName,
-                accessToken: accessToken
-            }
-            console.log(memberInfo);
+        if (checkSomething.checkNull(token) === false) {
             res.json({
-                result: memberInfo
+                err: "please enter the token."
             })
-            // console.log(memberInfo);
-            //將資料寫入資料庫並寄信告知
-    //         memberData(memberInfo).then(
-    //             function (result) {
-    //                 res.json({
-    //                     result: result,
-    //                 }
-    //                 )
-    //             }
-    //     }
-    //   ).catch(function (err) {
-    //         // console.log(err);
-    //         let error = {
-    //             status: '500',
-    //             stack: ""
-    //         }
-    //         res.render('error', {
-    //             message: err,
-    //             error: error
-    //         })
-    //     })
+            return;
+        }
+        //認證token
+        checkToken(token).then((tokenResult) => {
+            if (tokenResult === false) {
+                res.redirect(config.production.URL + '/#/');
+                // res.redirect(config.development.testURL + '/#/');
+                return;
+            } else {
+                let memberData = new MemberData();
+                memberData.getAllMember().then((result) => {
+                    res.json({
+                        result: result
+                    })
+                })
+            }
+        }, (err) => {
+            res.json({
+                err: err
+            })
+        })
+    }
+    //取得單一會員資料
+    getOneMemberData(req, res, next) {
+        //登入判斷
+        const token = req.headers['x-access-token'];
+        //確定token是否輸入
+        const checkSomething = new CheckSomething();
+
+        if (checkSomething.checkNull(token) === false) {
+            res.json({
+                err: "please enter the token."
+            })
+            return;
+        }
+        //認證token
+        checkToken(token).then((tokenResult) => {
+            if (tokenResult === false) {
+                res.redirect(config.production.URL + '/#/');
+                // res.redirect(config.development.testURL + '/#/');
+                return;
+            } else {
+                let decode = jwt.decode(token, { complete: true });
+                let id = decode.payload.data;
+                let memberData = new MemberData();
+                // console.log("id: " + id);
+                memberData.getOneMember(id).then((result) => {
+                    res.json({
+                        result: result
+                    })
+                })
+            }
+        }, (err) => {
+            res.json({
+                err: err
+            })
+        })
     }
 }

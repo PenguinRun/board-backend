@@ -12,8 +12,10 @@ module.exports = {
       server: process.env.REGION
     },
     secret: process.env.SECRETKEY,
+    secret_key: process.env.SECRET_KEY,
+    testURL: process.env.testURL
   },
   production: {
-
+    URL: process.env.URL
   }
 }

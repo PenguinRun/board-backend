@@ -7,8 +7,8 @@ var Strategy = require('passport-facebook').Strategy;
 passport.use(new Strategy({
     clientID: config.development.fb.number,
     clientSecret: config.development.fb.key,
-    // callbackURL: 'https://devche.com/todolist/login/facebook/return',
-    callbackURL: 'http://localhost:8007/api/speechmember/login/facebook/return',
+    callbackURL: config.production.URL + '/todolist/login/facebook/return',
+    callbackURL: config.development.testURL + '/api/speechmember/login/facebook/return',
     profileFields: ['id', 'displayName', 'email', 'photos', 'gender']
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -18,10 +18,6 @@ passport.use(new Strategy({
     // allows for account linking and authentication with other identity
     // providers.
 
-    // console.log("access: " + accessToken);
-    // console.log("refresh: " + refreshToken);
-    // console.log("profile: " + JSON.stringify(profile));
-    // console.log("email: " + profile._json.email);
     var obj = {
       accessToken: accessToken,
       id: profile._json.id,
@@ -46,12 +42,13 @@ passport.use(new Strategy({
 // example does not have a database, the complete Facebook profile is serialized
 // and deserialized.
 passport.serializeUser(function(user, cb) {
-  // console.log(user);
+  // console.log("serializUser: " + JSON.stringify(user));
   cb(null, user);
 });
 
-passport.deserializeUser(function(obj, cb) {
-  cb(null, obj);
+passport.deserializeUser(function(user, cb) {
+  // console.log("deserializeUser: " + JSON.stringify(user));
+  cb(null, user);
 });
 
 

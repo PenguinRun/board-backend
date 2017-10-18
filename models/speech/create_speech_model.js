@@ -17,6 +17,7 @@ module.exports = createSpeech = (insertData) => {
             Item: {
                 "id": insertData.id,
                 "speaker": insertData.speaker,
+                "speaker_img": insertData.speaker_img,
                 "title": insertData.title,
                 "message": insertData.message,
                 "speech_date": insertData.speech_date,

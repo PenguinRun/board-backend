@@ -11,24 +11,27 @@ var speechClass = require('./routes/speech_class');
 var speechMember = require('./routes/speech_member');
 var users = require('./routes/users');
 
+const config = require('./config/config');
+
 var app = express();
 
 // Add headers
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  // res.header('Access-Control-Allow-Origin', '*');
 
   // Request methods you wish to allow
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
 
   // Request headers you wish to allow
-  res.header('Access-Control-Allow-Headers', 'Origin ,X-Requested-With, Content-Type, Accept, x-access-token')
+  res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, x-access-token')
   
   res.header('Access-Control-Expose-Headers', 'x-access-token')
 
   // Set to true if you need the website to include cookies in the requests sent
   // to the API (e.g. in case you use sessions)
-  res.header('Access-Control-Allow-Credentials', true)
+  // res.header('Access-Control-Allow-Credentials', true);
 
   // Pass to next layer of middleware
   next()
@@ -42,15 +45,12 @@ app.set('view engine', 'ejs');
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //facebook-passport
-app.use(require('serve-static')(__dirname + '/../../public'));
-app.use(require('cookie-parser')());
-app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(require('express-session')({ secret: 'PenguinRun', resave: true, saveUninitialized: true }));
+app.use(require('express-session')({ secret: config.development.secret_key, resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
