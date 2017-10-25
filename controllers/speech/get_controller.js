@@ -24,7 +24,7 @@ module.exports = class SpeechGetMethod {
         //認證token
         checkToken(token).then((tokenResult) => {
             if (tokenResult === false) {
-                res.redirect(config.production.URL + '/goodideabillboard/#/backstage/#/');
+                res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
                 // res.redirect(config.development.testURL + '/#/');
                 return;
             } else {

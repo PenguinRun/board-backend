@@ -24,7 +24,7 @@ module.exports = class SpeechModifyMethod {
         checkToken(token).then((tokenResult) => {
             //若失敗
             if (tokenResult === false) {
-                res.redirect(config.production.URL + '/goodideabillboard/#/backstage/#/');
+                res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
                 // res.redirect(config.development.testURL + '/#/');
             } else {
                 //若成功
@@ -74,7 +74,7 @@ module.exports = class SpeechModifyMethod {
         checkToken(token).then((tokenResult) => {
             //若失敗
             if (tokenResult === false) {
-                res.redirect(config.production.URL + '/goodideabillboard/#/backstage/#/');
+                res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
                 // res.redirect(config.development.testURL + '/#/');
             } else {
                 //若成功
@@ -131,7 +131,7 @@ module.exports = class SpeechModifyMethod {
         checkToken(token).then((tokenResult) => {
             //若失敗
             if (tokenResult === false) {
-                res.redirect(config.production.URL + '/goodideabillboard/#/backstage/#/');
+                res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
                 // res.redirect(config.development.testURL + '/#/');
             } else {
                 //若成功
