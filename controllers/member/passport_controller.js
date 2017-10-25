@@ -7,7 +7,7 @@ module.exports = class Passport {
     authenticate(req, res, next) {
         return passport.authenticate('facebook', {
             authType: 'rerequest',
-            scope: ['email']
+            scope: ['public_profile']
         })
     }
     //進行認證確認

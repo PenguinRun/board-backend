@@ -24,7 +24,7 @@ module.exports = class SpeechClassGetMethod {
         checkToken(token).then((tokenResult) => {
             //若失敗
             if (tokenResult === false) {
-                res.redirect(config.production.URL + '/#/');
+                res.redirect(config.production.URL + '/goodideabillboard/#/backstage/#/');
                 // res.redirect(config.development.testURL + '/#/');
                 return;
             } else {

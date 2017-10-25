@@ -11,7 +11,7 @@ module.exports = class SpeechGetMethod {
     getSpeechData(req, res, next) {
         //登入判斷
         const token = req.headers['x-access-token'];
-
+        
         //確定token是否輸入
         const checkSomething = new CheckSomething();
         if (checkSomething.checkNull(token) === false) {
@@ -24,7 +24,7 @@ module.exports = class SpeechGetMethod {
         //認證token
         checkToken(token).then((tokenResult) => {
             if (tokenResult === false) {
-                res.redirect(config.production.URL + '/#/');
+                res.redirect(config.production.URL + '/goodideabillboard/#/backstage/#/');
                 // res.redirect(config.development.testURL + '/#/');
                 return;
             } else {
