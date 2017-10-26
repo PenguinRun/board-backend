@@ -15,7 +15,7 @@ module.exports = class Passport {
         return passport.authenticate('facebook', {
             successRedirect: '/api/speechmember/login/redirect',
             // failureRedirect: config.development.testURL + '/#/', //認證失敗的導入
-            failureRedirect: config.production.URL + '/#/', //認證失敗的導入
+            failureRedirect: config.production.URL + '/goodideabillboard/', //認證失敗的導入
             
         })
     }
