@@ -15,9 +15,8 @@ module.exports = class GetMember {
         const checkSomething = new CheckSomething();
 
         if (checkSomething.checkNull(token) === false) {
-            res.json({
-                err: "please enter the token."
-            })
+            res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
+            // res.redirect(config.development.testURL + '/#/');
             return;
         }
         //認證token
@@ -48,9 +47,8 @@ module.exports = class GetMember {
         const checkSomething = new CheckSomething();
 
         if (checkSomething.checkNull(token) === false) {
-            res.json({
-                err: "please enter the token."
-            })
+            res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
+            // res.redirect(config.development.testURL + '/#/');
             return;
         }
         //認證token

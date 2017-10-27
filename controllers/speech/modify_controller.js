@@ -66,9 +66,8 @@ module.exports = class SpeechModifyMethod {
         const checkSomething = new CheckSomething();
 
         if (checkSomething.checkNull(token) === false) {
-            res.json({
-                err: "please enter the token."
-            })
+            res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
+            // res.redirect(config.development.testURL + '/#/');
         }
         //認證token
         checkToken(token).then((tokenResult) => {
@@ -123,9 +122,8 @@ module.exports = class SpeechModifyMethod {
         const checkSomething = new CheckSomething();
 
         if (checkSomething.checkNull(token) === false) {
-            res.json({
-                err: "please enter the token."
-            })
+            res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
+            // res.redirect(config.development.testURL + '/#/');
         }
         //認證token
         checkToken(token).then((tokenResult) => {

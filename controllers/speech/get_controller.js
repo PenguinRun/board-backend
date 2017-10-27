@@ -11,13 +11,12 @@ module.exports = class SpeechGetMethod {
     getSpeechData(req, res, next) {
         //登入判斷
         const token = req.headers['x-access-token'];
-        
+
         //確定token是否輸入
         const checkSomething = new CheckSomething();
         if (checkSomething.checkNull(token) === false) {
-            res.json({
-                err: "please enter the token."
-            })
+            res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
+            // res.redirect(config.development.testURL + '/#/');
             return;
         }
 

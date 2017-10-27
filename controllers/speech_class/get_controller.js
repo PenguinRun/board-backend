@@ -15,9 +15,8 @@ module.exports = class SpeechClassGetMethod {
         
         //確定token是否輸入
         if (checkSomething.checkNull(token) === false) {
-            res.json({
-                err: "please enter the token."
-            })
+            res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
+            // res.redirect(config.development.testURL + '/#/');
             return;
         }
         //認證token
