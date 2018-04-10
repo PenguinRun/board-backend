@@ -28,6 +28,10 @@ module.exports = class SpeechModifyMethod {
                 // res.redirect(config.development.testURL + '/#/');
             } else {
                 //若成功
+                var checkLink = req.body.link;
+                if (checkLink === "") {
+                    checkLink = null
+                }
                 const insertData = {
                     "id": req.query.id,
                     "speaker": req.body.speaker,
@@ -94,8 +98,6 @@ module.exports = class SpeechModifyMethod {
                     "create_date": req.body.create_date,
                     "update_date": onTime()
                 }
-
-                console.log("objects: " + JSON.stringify(updateData));
 
                 updateSpeech(updateData).then((result) => {
                     res.json({

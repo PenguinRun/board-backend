@@ -18,7 +18,7 @@ var app = express();
 // Add headers
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Origin',  req.headers.origin = req.headers.origin || req.headers.host);
   // res.header('Access-Control-Allow-Origin', '*');
 
   // Request methods you wish to allow

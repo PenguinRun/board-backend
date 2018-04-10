@@ -5,4 +5,4 @@ api list:
 get
 post
 put
-delete
+delete

@@ -39,21 +39,16 @@ module.exports = class SpeechGetMethod {
             }
         })
     }
-    getSpeechDataForFrontEnd(req, res, next) {
-        getSpeech().then((result) => {
-            // 去除三個扼要的屬性
-            result.forEach(function (element) {
-                delete element.create_date;
-                delete element.update_date;
-                delete element.id;
-            }, this);
-            res.json({
-                result: result
-            })
-        }, (err) => {
-            res.json({
-                err: err
-            })
+    async getSpeechDataForFrontEnd(req, res, next) {
+        const result = await getSpeech()
+        // 將create_date, update_date及使用者的FB id隱蔽
+        result.map(element => {
+            delete element.create_date
+            delete element.update_date
+            delete element.id
+        })
+        res.json({
+            result
         })
     }
 }
