@@ -33,7 +33,7 @@ module.exports = class ModifyMember {
             // console.log("accessToken: " + accessToken);
             
             // 提取解析度更大的使用者大頭照
-            const getPictureURL = (userID) => {
+            const getFBPictureURL = (userID) => {
                 return new Promise((resolve, reject) => {
                     request.get({
                         url: 'https://graph.facebook.com/' + userID + '/?fields=picture.width(886).height(886)&access_token=' + accessToken,
@@ -44,7 +44,26 @@ module.exports = class ModifyMember {
                     })
                 })
             }
-            
+            const fbPictureURL = await getFBPictureURL(id)
+            const getImgurURL = (fbPictureURL) => {
+                return new Promise((resolve, reject) => {
+                    request.post({
+                        url: 'https://api.imgur.com/3/image',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'Authorization': 'Client-ID ' + config.development.imgur_client_id
+                        },
+                        form: {
+                            'image': fbPictureURL
+                        }
+                    }, function (err, res, body) {
+                        // console.log(body)
+                        const imgurObject = JSON.parse(body)
+                        resolve(imgurObject.data.link)
+                    })
+                })
+            } 
+
             //生成token
             const token = jwt.sign({
                 algorithm: 'HS256',
@@ -56,7 +75,7 @@ module.exports = class ModifyMember {
                 id: id,
                 email: email,
                 displayName: displayName,
-                photos: await getPictureURL(id),
+                photos: await getImgurURL(fbPictureURL),
                 gender: gender,
                 token: token,
             }

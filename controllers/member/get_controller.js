@@ -15,15 +15,15 @@ module.exports = class GetMember {
         const checkSomething = new CheckSomething();
 
         if (checkSomething.checkNull(token) === false) {
-            res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
-            // res.redirect(config.development.testURL + '/#/');
+            // res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
+            res.redirect(config.development.testURL + '/#/');
             return;
         }
         //認證token
         checkToken(token).then((tokenResult) => {
             if (tokenResult === false) {
-                res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
-                // res.redirect(config.development.testURL + '/#/');
+                // res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
+                res.redirect(config.development.testURL + '/#/');
                 return;
             } else {
                 let memberData = new MemberData();

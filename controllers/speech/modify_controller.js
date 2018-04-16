@@ -24,8 +24,8 @@ module.exports = class SpeechModifyMethod {
         checkToken(token).then((tokenResult) => {
             //若失敗
             if (tokenResult === false) {
-                res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
-                // res.redirect(config.development.testURL + '/#/');
+                // res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
+                res.redirect(config.development.testURL + '/#/');
             } else {
                 //若成功
                 var checkLink = req.body.link;
@@ -124,7 +124,7 @@ module.exports = class SpeechModifyMethod {
         const checkSomething = new CheckSomething();
 
         if (checkSomething.checkNull(token) === false) {
-            res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
+            res.redirect(config.production.URL + '/goodideabillbo/ard/backstage/#/');
             // res.redirect(config.development.testURL + '/#/');
         }
         //認證token

@@ -13,7 +13,8 @@ module.exports = {
     },
     secret: process.env.SECRETKEY,
     secret_key: process.env.SECRET_KEY,
-    testURL: process.env.testURL
+    testURL: process.env.testURL,
+    imgur_client_id: process.env.IMGUR_CLIENT_ID 
   },
   production: {
     URL: process.env.URL
