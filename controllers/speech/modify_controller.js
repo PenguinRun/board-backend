@@ -87,10 +87,11 @@ module.exports = class SpeechModifyMethod {
                 if (checkLink === "") {
                     checkLink = null
                 }
-
+                console.log('origin date: ', req.body.create_date)
                 let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format()
                 create_date = create_date.replace(/T/g, " ");
                 create_date = create_date.substring(0, create_date.indexOf("+"))
+                console.log('origin date: ', create_date)
                 // 2018-05-07 05:03:04
                 const updateData = {
                     facebook_id: req.query.id,
