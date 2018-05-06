@@ -10,26 +10,15 @@ module.exports = loginCheck = (loginData) => {
 
     // 取得全部的資料，且依照FB ID來撈出相對應的create_date
 
-    const checkRegister = await db.query('SELECT facebook_id FROM speech_member WHERE facebook_id = ?', loginData.facebook_id, function (err, rows) {
-      // 若資料庫部分出現問題，則回傳給client端「伺服器錯誤，請稍後再試！」的結果。
-      if (err) {
-        console.log(err)
-        reject('伺服器錯誤，請稍後再試！')
-      }
-      if (rows.length >= 1) {
-        return true
-      } else {
-        return false
-      }
-    })
-    console.log('checkRegister: ', checkRegister)
+    const checkRegisterResult = await checkRegister(loginData.facebook_id)
+    console.log('checkRegisterResult: ', checkRegisterResult)
 
-    if (checkRegister === true) {
+    if (checkRegisterResult === true) {
       const updateSpeechData = {
         speaker_img: loginData.photos,
         speaker: loginData.displayName
       }
-  
+
       // 更新speech table中，所有登入講者的大頭貼
       await db.query('UPDATE speech SET ? WHERE facebook_id = ?', [updateSpeechData, loginData.facebook_id], (err, rows) => {
         if (err) {
@@ -54,13 +43,13 @@ module.exports = loginCheck = (loginData) => {
         }
       })
       resolve('舊會員登入成功')
-    } else if (checkRegister === false) {
+    } else if (checkRegisterResult === false) {
 
       await db.query('INSERT INTO speech_member SET ?', loginData, (err, rows) => {
-          if (err) {
-              console.log(err)
-              reject('伺服器錯誤，請稍後再試！')
-          }
+        if (err) {
+          console.log(err)
+          reject('伺服器錯誤，請稍後再試！')
+        }
       })
       resolve('新會員登入成功')
     }
@@ -147,3 +136,20 @@ module.exports = loginCheck = (loginData) => {
     // })
   })
 };
+
+function checkRegister(id) {
+  return new Promise((resolve, reject) => {
+    db.query('SELECT facebook_id FROM speech_member WHERE facebook_id = ?', id, function (err, rows) {
+      // 若資料庫部分出現問題，則回傳給client端「伺服器錯誤，請稍後再試！」的結果。
+      if (err) {
+        console.log(err)
+        reject('伺服器錯誤，請稍後再試！')
+      }
+      if (rows.length >= 1) {
+        resolve(true)
+      } else {
+        resolve(false)
+      }
+    })
+  })
+}
