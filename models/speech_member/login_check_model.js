@@ -4,6 +4,7 @@
 const db = require('../db_connect');
 
 module.exports = loginCheck = (loginData) => {
+  console.log('run login function')
   return new Promise(async (resolve, reject) => {
     // console.log("loginData: " + JSON.stringify(loginData));
 
@@ -21,6 +22,7 @@ module.exports = loginCheck = (loginData) => {
         return false
       }
     })
+    console.log('checkRegister: ', checkRegister)
 
     if (checkRegister === true) {
       const updateSpeechData = {
@@ -50,8 +52,8 @@ module.exports = loginCheck = (loginData) => {
           console.log(err)
           reject('伺服器錯誤，請稍後再試！')
         }
-        resolve('舊會員登入成功')
       })
+      resolve('舊會員登入成功')
     } else if (checkRegister === false) {
 
       await db.query('INSERT INTO speech_member SET ?', loginData, (err, rows) => {
@@ -59,9 +61,8 @@ module.exports = loginCheck = (loginData) => {
               console.log(err)
               reject('伺服器錯誤，請稍後再試！')
           }
-          resolve('新會員登入成功')
       })
-      
+      resolve('新會員登入成功')
     }
 
     // DynamoDB
