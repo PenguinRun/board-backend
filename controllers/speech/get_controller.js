@@ -28,6 +28,10 @@ module.exports = class SpeechGetMethod {
                 return;
             } else {
                 getSpeech().then((result) => {
+                    result.map(element => {
+                        delete element.id
+                        element.id = element.facebook_id
+                    })
                     res.json({
                         result: result
                     })

@@ -16,7 +16,6 @@ module.exports = class ModifyMember {
             const id = req.query.id;
 
             getToken(id).then((token) => {
-                // console.log("token: " + token);
                 res.header('x-access-token', token);
                 res.end();
             })

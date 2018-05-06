@@ -6,14 +6,14 @@ module.exports = getToken = (id) => {
     return new Promise((resolve, reject) => {
         //資料庫取得資料的動作
         let result = {}
-        db.query('SELECT token FROM speech_member where id = ?', id, (err, rows) => {
+        db.query('SELECT token FROM speech_member where facebook_id = ?', id, (err, rows) => {
             if (err) {
                 console.log(err)
                 result.status = '取得token失敗'
                 result.err = '伺服器錯誤，請稍後再試'
                 reject(result)
             }
-            resolve(rows)
+            resolve(rows[0].token)
         })
         //DynamoDB
         // const params = {

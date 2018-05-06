@@ -1,4 +1,5 @@
 const config = require('../../config/config');
+const moment = require('moment-timezone')
 
 const createSpeech = require('../../models/speech/create_speech_model');
 const updateSpeech = require('../../models/speech/update_speech_model');
@@ -33,18 +34,19 @@ module.exports = class SpeechModifyMethod {
                     checkLink = null
                 }
                 const insertData = {
-                    "facebook_id": req.query.id,
-                    "speaker": req.body.speaker,
-                    "speaker_img": req.body.speaker_img,
-                    "title": req.body.title,
-                    "message": req.body.message,
-                    "speech_date": req.body.speech_date,
-                    "link": req.body.link,
-                    "class": req.body.class,
-                    "class_img": req.body.class_img,
-                    "create_date": onTime(),
+                    facebook_id: req.query.id,
+                    speaker: req.body.speaker,
+                    speaker_img: req.body.speaker_img,
+                    title: req.body.title,
+                    message: req.body.message,
+                    speech_date: req.body.speech_date,
+                    link: req.body.link,
+                    class: req.body.class,
+                    class_img: req.body.class_img,
+                    create_date: onTime(),
                     // "update_date": null,
                 }
+                console.log('ontime: ', onTime())
                 createSpeech(insertData).then((result) => {
                     res.json({
                         result: result
@@ -85,18 +87,23 @@ module.exports = class SpeechModifyMethod {
                 if (checkLink === "") {
                     checkLink = null
                 }
+
+                let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format()
+                create_date = create_date.replace(/T/g, " ");
+                create_date = create_date.substring(0, create_date.indexOf("+"))
+                // 2018-05-07 05:03:04
                 const updateData = {
-                    "facebook_id": req.query.id,
-                    "speaker": req.body.speaker,
-                    "speaker_img": req.body.speaker_img,
-                    "title": req.body.title,
-                    "message": req.body.message,
-                    "speech_date": req.body.speech_date,
-                    "link": checkLink,
-                    "class": req.body.class,
-                    "class_img": req.body.class_img,
-                    "create_date": req.body.create_date
-                    // "update_date": onTime()
+                    facebook_id: req.query.id,
+                    speaker: req.body.speaker,
+                    speaker_img: req.body.speaker_img,
+                    title: req.body.title,
+                    message: req.body.message,
+                    speech_date: req.body.speech_date,
+                    link: checkLink,
+                    class: req.body.class,
+                    class_img: req.body.class_img,
+                    create_date
+                    // update_date: onTime()
                 }
 
                 updateSpeech(updateData).then((result) => {
@@ -135,10 +142,15 @@ module.exports = class SpeechModifyMethod {
                 res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
                 // res.redirect(config.development.testURL + '/#/');
             } else {
+
+                let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format()
+                create_date = create_date.replace(/T/g, " ");
+                create_date = create_date.substring(0, create_date.indexOf("+"))
+
                 //若成功
                 const deleteData = {
-                    "facebook_id": req.query.id,
-                    "create_date": req.body.create_date
+                    facebook_id: req.query.id,
+                    create_date
                 }
                 deleteSpeech(deleteData).then((result) => {
                     res.json({
