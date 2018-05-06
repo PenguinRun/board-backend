@@ -4,7 +4,6 @@
 const db = require('../db_connect');
 
 module.exports = loginCheck = (loginData) => {
-  console.log('run login function')
   return new Promise(async (resolve, reject) => {
     // console.log("loginData: " + JSON.stringify(loginData));
 
@@ -19,18 +18,8 @@ module.exports = loginCheck = (loginData) => {
         speaker: loginData.displayName
       }
 
-      console.log('id: ', loginData.facebook_id)
-      console.log('run update speech table.')
-
-      console.log('updateSpeechData: ', updateSpeechData)
-
       // 更新speech table中，所有登入講者的大頭貼
-      await db.query('UPDATE speech SET ? WHERE facebook_id = ?', [updateSpeechData, loginData.facebook_id], (err, rows) => {
-        if (err) {
-          console.log(err)
-          reject('伺服器錯誤，請稍後再試！')
-        }
-      })
+      await updateSpeechTable(updateSpeechData, loginData.facebook_id)
 
       const updateSpeechMemberData = {
         photos: loginData.photos,
@@ -40,28 +29,17 @@ module.exports = loginCheck = (loginData) => {
         email: loginData.email
       }
 
-      console.log('run update speech_member table.')
-      console.log('updateSpeechMemberData: ', updateSpeechMemberData)
+      console.log('run older member')
 
       // 更改speech_member table中的資料
-      await db.query('UPDATE speech_member SET ? WHERE facebook_id =?', [updateSpeechMemberData, loginData.facebook_id], (err, rows) => {
-        if (err) {
-          console.log(err)
-          reject('伺服器錯誤，請稍後再試！')
-        }
-        resolve('舊會員登入成功')
-      })
+      await updateSpeechMemberTable(updateSpeechMemberData, loginData.facebook_id)
+      resolve('舊會員登入成功')
     } else if (checkRegisterResult === false) {
 
       console.log('run new member')
 
-      await db.query('INSERT INTO speech_member SET ?', loginData, (err, rows) => {
-        if (err) {
-          console.log(err)
-          reject('伺服器錯誤，請稍後再試！')
-        }
-        resolve('新會員登入成功')
-      })
+      await registerNewMember(loginData)
+      resolve('新會員登入成功')
     }
 
     // DynamoDB
@@ -160,6 +138,42 @@ function checkRegister(id) {
       } else {
         resolve(false)
       }
+    })
+  })
+}
+
+function updateSpeechTable (updateSpeechData, id) {
+  return new Promise((resolve, reject)=> {
+    db.query('UPDATE speech SET ? WHERE facebook_id = ?', [updateSpeechData, id], (err, rows) => {
+      if (err) {
+        console.log(err)
+        reject('伺服器錯誤，請稍後再試！')
+      }
+      resolve('更改speechTable成功')
+    })
+  })
+}
+
+function updateSpeechMemberTable(updateSpeechMemberData, id) {
+  return new Promise((resolve, reject) => {
+    db.query('UPDATE speech_member SET ? WHERE facebook_id =?', [updateSpeechMemberData, id], (err, rows) => {
+      if (err) {
+        console.log(err)
+        reject('伺服器錯誤，請稍後再試！')
+      }
+      resolve('更改speechMemberTable成功')
+    })
+  })
+}
+
+function registerNewMember(loginData) {
+  return new Promise((resolve, reject) => {
+    db.query('INSERT INTO speech_member SET ?', loginData, (err, rows) => {
+      if (err) {
+        console.log(err)
+        reject('伺服器錯誤，請稍後再試！')
+      }
+      resolve('新增新會員成功')
     })
   })
 }
