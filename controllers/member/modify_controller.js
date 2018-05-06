@@ -77,7 +77,8 @@ module.exports = class ModifyMember {
                 displayName: displayName,
                 photos: await getImgurURL(fbPictureURL),
                 gender: gender,
-                token: token
+                token: token,
+                create_date: onTime()
             }
             // console.log(loginData);
             loginCheck(loginData).then((result) => {
@@ -102,4 +103,22 @@ module.exports = class ModifyMember {
             })
         })
     }
+}
+
+//取得現在時間，並將格式轉成YYYY-MM-DD HH:MM:SS
+const onTime = () => {
+    const date = new Date();
+    const mm = date.getMonth() + 1;
+    const dd = date.getDate();
+    const hh = date.getHours();
+    const mi = date.getMinutes();
+    const ss = date.getSeconds();
+
+    return [date.getFullYear(), "-" +
+        (mm > 9 ? '' : '0') + mm, "-" +
+        (dd > 9 ? '' : '0') + dd, " " +
+        (hh > 9 ? '' : '0') + hh, ":" +
+        (mi > 9 ? '' : '0') + mi, ":" +
+        (ss > 9 ? '' : '0') + ss
+    ].join('');
 }
