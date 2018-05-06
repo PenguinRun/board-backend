@@ -33,12 +33,14 @@ module.exports = class SpeechClassGetMethod {
                         result: result
                     })
                 }, (err) => {
+                    console.log(err)
                     res.json({
                         err: err
                     })
                 })
             }
         }, (err) => {
+            console.log(err)
             res.json({
                 err: err
             })
