@@ -72,17 +72,19 @@ module.exports = class ModifyMember {
             }, config.development.secret);
 
             const loginData = {
-                id: id,
+                facebook_id: id,
                 email: email,
                 displayName: displayName,
                 photos: await getImgurURL(fbPictureURL),
                 gender: gender,
-                token: token,
+                token: token
             }
             // console.log(loginData);
             loginCheck(loginData).then((result) => {
                 res.redirect(config.production.URL + '/goodideabillboard/backstage/#/home/?id=' + id);
                 // res.redirect('http://localhost:8000/#/home/?id=' + id);
+            }, (err) => {
+                console.log(err)
             });
         }
     }
@@ -94,6 +96,7 @@ module.exports = class ModifyMember {
                 result: result
             })
         }, (err) => {
+            console.log(err)
             res.json({
                 err: err
             })

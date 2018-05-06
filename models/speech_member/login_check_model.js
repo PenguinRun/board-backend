@@ -1,100 +1,148 @@
-var Dynamodb = require('../../models/db_connect.js');
-var docClient = Dynamodb.docClient;
-const getAllSpeechDataAction = require('../../models/speech/get_speech_model')
+// var Dynamodb = require('../../models/db_connect.js');
+// var docClient = Dynamodb.docClient;
+// const getAllSpeechDataAction = require('../../models/speech/get_speech_model')
+const db = require('../db_connect');
 
 module.exports = loginCheck = (loginData) => {
   return new Promise(async (resolve, reject) => {
     // console.log("loginData: " + JSON.stringify(loginData));
 
-    //搜尋會員id
-    // const searchParams = {
-    //     TableName: "speech_member",
-    //     Key: {
-    //         "id": loginData.id
-    //     }
-    //   }
-
     // 取得全部的資料，且依照FB ID來撈出相對應的create_date
-    const getAllData = await getAllSpeechDataAction()
 
-    let createDates = []
-
-    getAllData.map((element) => {
-      if (element.id === loginData.id) {
-        createDates.push(element.create_date)
+    const checkRegister = await db.query('SELECT facebook_id FROM speech_member WHERE facebook_id = ?', loginData.facebook_id, function (err, rows) {
+      // 若資料庫部分出現問題，則回傳給client端「伺服器錯誤，請稍後再試！」的結果。
+      if (err) {
+        console.log(err)
+        reject('伺服器錯誤，請稍後再試！')
+      }
+      if (rows.length >= 1) {
+        return true
+      } else {
+        return false
       }
     })
 
-    // createDates.map((element) => console.log(element))
-
-    createDates.map( async (element) => {
-      const updateParams = {
-        TableName: "speech",
-        Key: {
-          "create_date": element
-        },
-        ExpressionAttributeNames: {
-          "#s": "speaker_img",
-        },
-        UpdateExpression: "SET #s = :newImg",
-        ExpressionAttributeValues: {
-          ":newImg": loginData.photos,
-        }
+    if (checkRegister === true) {
+      const updateSpeechData = {
+        speaker_img: loginData.photos,
+        speaker: loginData.displayName
       }
-
-      await docClient.update(updateParams, function (err, data) {
+  
+      // 更新speech table中，所有登入講者的大頭貼
+      await db.query('UPDATE speech SET ? WHERE facebook_id = ?', [updateSpeechData, loginData.facebook_id], (err, rows) => {
         if (err) {
           console.log(err)
+          reject('伺服器錯誤，請稍後再試！')
         }
-        // console.log(data)
       })
-    })
 
-    const inputParams = {
-      TableName: "speech_member",
-      Item: {
-        "id": loginData.id,
-        "email": loginData.email,
-        "displayName": loginData.displayName,
-        "photos": loginData.photos,
-        "gender": loginData.gender,
-        "token": loginData.token
+      const updateSpeechMemberData = {
+        photos: loginData.photos,
+        displayName: loginData.displayName,
+        token: loginData.token,
+        gender: loginData.gender,
+        email: loginData.email
       }
-    };
 
-    await docClient.put(inputParams, async function (err, data) {
-      if (err) {
-        //   console.log(err);
-        reject("set member error.");
-        return;
-      } else {
-        resolve("set member successful.");
-      }
-    })
+      // 更改speech_member table中的資料
+      await db.query('UPDATE speech_member SET ? WHERE facebook_id =?', [updateSpeechMemberData, loginData.facebook_id], (err, rows) => {
+        if (err) {
+          console.log(err)
+          reject('伺服器錯誤，請稍後再試！')
+        }
+        resolve('舊會員登入成功')
+      })
+    } else if (checkRegister === false) {
 
-    // //查詢是否有這位會員
-    // docClient.get(searchParams, async function(err, result) {
+      await db.query('INSERT INTO speech_member SET ?', loginData, (err, rows) => {
+          if (err) {
+              console.log(err)
+              reject('伺服器錯誤，請稍後再試！')
+          }
+          resolve('新會員登入成功')
+      })
+      
+    }
+
+    // DynamoDB
+    // const inputParams = {
+    //   TableName: "speech_member",
+    //   Item: {
+    //     "id": loginData.id,
+    //     "email": loginData.email,
+    //     "displayName": loginData.displayName,
+    //     "photos": loginData.photos,
+    //     "gender": loginData.gender,
+    //     "token": loginData.token
+    //   }
+    // };
+
+    // await docClient.put(inputParams, async function (err, data) {
     //   if (err) {
-    //   //   console.log(err);
-    //     reject("search member error.");
+    //     //   console.log(err);
+    //     reject("set member error.");
+    //     return;
     //   } else {
-    //     // console.log("result.Item" + result.Item);
-    //   // 如果資料庫沒有該會員資料則進行新增動作
-    //     if (result.Item === 'undefined' || result.Item === undefined || result.Item === "null") {
-    //       docClient.put(inputParams, async function(err, data) {
-    //           if (err) {
-    //           //   console.log(err);
-    //             reject("create member error.");
-    //             return;
-    //           } else {
-    //             resolve("create member successful.");
-    //           }
-    //         })
-    //     } else {
-    //       // console.log("success: " + result.Item);
-    //       resolve(result.Item);
+    //     resolve("set member successful.");
+    //   }
+    // })
+
+
+    // const getAllData = await getAllSpeechDataAction()
+
+    // let createDates = []
+
+    // getAllData.map((element) => {
+    //   if (element.id === loginData.id) {
+    //     createDates.push(element.create_date)
+    //   }
+    // })
+
+    // // createDates.map((element) => console.log(element))
+
+    // createDates.map(async (element) => {
+    //   const updateParams = {
+    //     TableName: "speech",
+    //     Key: {
+    //       "create_date": element
+    //     },
+    //     ExpressionAttributeNames: {
+    //       "#s": "speaker_img",
+    //     },
+    //     UpdateExpression: "SET #s = :newImg",
+    //     ExpressionAttributeValues: {
+    //       ":newImg": loginData.photos,
     //     }
     //   }
-    // });
+
+    //   await docClient.update(updateParams, function (err, data) {
+    //     if (err) {
+    //       console.log(err)
+    //     }
+    //     // console.log(data)
+    //   })
+    // })
+
+    // const inputParams = {
+    //   TableName: "speech_member",
+    //   Item: {
+    //     "id": loginData.id,
+    //     "email": loginData.email,
+    //     "displayName": loginData.displayName,
+    //     "photos": loginData.photos,
+    //     "gender": loginData.gender,
+    //     "token": loginData.token
+    //   }
+    // };
+
+    // await docClient.put(inputParams, async function (err, data) {
+    //   if (err) {
+    //     //   console.log(err);
+    //     reject("set member error.");
+    //     return;
+    //   } else {
+    //     resolve("set member successful.");
+    //   }
+    // })
   })
 };

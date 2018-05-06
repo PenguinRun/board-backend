@@ -1,16 +1,39 @@
-var AWS = require('aws-sdk');
-var config = require('../config/config');
+// DataBase
+const config = require('../config/config');
+const mysql = require("mysql");
 
-AWS.config.update({
-  accessKeyId: config.development.aws.id,
-  secretAccessKey: config.development.aws.sk,
-  region: config.development.aws.server
+const connection = mysql.createConnection({
+  host: config.development.mysql.host,
+  user: config.development.mysql.user,
+  password: config.development.mysql.password,
+  database: config.development.mysql.database,
+  // port: config.development.mysql.port
 });
 
-var dynamodb = new AWS.DynamoDB();
+connection.connect(err => {
+  if (err) {
+    console.log('connecting error');
+  } else {
+    console.log('connecting success');
+  }
+});
 
-exports.dynamodb = dynamodb;
+module.exports = connection;
 
-var docClient = new AWS.DynamoDB.DocumentClient();
+// AWS DynamoDB
+// var AWS = require('aws-sdk');
+// var config = require('../config/config');
 
-exports.docClient=docClient;
+// AWS.config.update({
+//   accessKeyId: config.development.aws.id,
+//   secretAccessKey: config.development.aws.sk,
+//   region: config.development.aws.server
+// });
+
+// var dynamodb = new AWS.DynamoDB();
+
+// exports.dynamodb = dynamodb;
+
+// var docClient = new AWS.DynamoDB.DocumentClient();
+
+// exports.docClient=docClient;

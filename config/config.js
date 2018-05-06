@@ -2,6 +2,13 @@ require('dotenv').config()
 
 module.exports = {
   development: {
+    mysql: {
+      host: process.env.HOST,
+      user: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE,
+      port:process.env.PORT
+    },
     fb:{
       number: process.env.NUMBER,
       key: process.env.KEY

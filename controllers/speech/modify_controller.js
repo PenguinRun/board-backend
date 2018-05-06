@@ -24,8 +24,8 @@ module.exports = class SpeechModifyMethod {
         checkToken(token).then((tokenResult) => {
             //若失敗
             if (tokenResult === false) {
-                // res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
-                res.redirect(config.development.testURL + '/#/');
+                res.redirect(config.production.URL + '/goodideabillboard/backstage/#/');
+                // res.redirect(config.development.testURL + '/#/');
             } else {
                 //若成功
                 var checkLink = req.body.link;
@@ -33,7 +33,7 @@ module.exports = class SpeechModifyMethod {
                     checkLink = null
                 }
                 const insertData = {
-                    "id": req.query.id,
+                    "facebook_id": req.query.id,
                     "speaker": req.body.speaker,
                     "speaker_img": req.body.speaker_img,
                     "title": req.body.title,
@@ -43,14 +43,14 @@ module.exports = class SpeechModifyMethod {
                     "class": req.body.class,
                     "class_img": req.body.class_img,
                     "create_date": onTime(),
-                    "update_date": null,
+                    // "update_date": null,
                 }
                 createSpeech(insertData).then((result) => {
                     res.json({
                         result: result
                     })
                 }, (err) => {
-                    // console.log(err);
+                    console.log(err);
                     res.json({
                         err: err
                     })
@@ -86,7 +86,7 @@ module.exports = class SpeechModifyMethod {
                     checkLink = null
                 }
                 const updateData = {
-                    "speaker_id" : req.body.speaker_id,
+                    "facebook_id": req.query.id,
                     "speaker": req.body.speaker,
                     "speaker_img": req.body.speaker_img,
                     "title": req.body.title,
@@ -95,8 +95,8 @@ module.exports = class SpeechModifyMethod {
                     "link": checkLink,
                     "class": req.body.class,
                     "class_img": req.body.class_img,
-                    "create_date": req.body.create_date,
-                    "update_date": onTime()
+                    "create_date": req.body.create_date
+                    // "update_date": onTime()
                 }
 
                 updateSpeech(updateData).then((result) => {
@@ -104,6 +104,7 @@ module.exports = class SpeechModifyMethod {
                         result: result
                     })
                 }, (err) => {
+                    console.log(err)
                     res.json({
                         err: err
                     })
@@ -127,7 +128,7 @@ module.exports = class SpeechModifyMethod {
             res.redirect(config.production.URL + '/goodideabillbo/ard/backstage/#/');
             // res.redirect(config.development.testURL + '/#/');
         }
-        //認證token
+        // 認證token
         checkToken(token).then((tokenResult) => {
             //若失敗
             if (tokenResult === false) {
@@ -136,13 +137,15 @@ module.exports = class SpeechModifyMethod {
             } else {
                 //若成功
                 const deleteData = {
-                    "create_date": req.body.create_date,
+                    "facebook_id": req.query.id,
+                    "create_date": req.body.create_date
                 }
                 deleteSpeech(deleteData).then((result) => {
                     res.json({
                         result: result
                     })
                 }, (err) => {
+                    console.log(err)
                     res.json({
                         err: err
                     })
