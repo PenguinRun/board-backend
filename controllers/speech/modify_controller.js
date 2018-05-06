@@ -87,12 +87,14 @@ module.exports = class SpeechModifyMethod {
                 if (checkLink === "") {
                     checkLink = null
                 }
-                console.log('origin date: ', req.body.create_date)
-                let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format()
-                create_date = create_date.replace(/T/g, " ");
-                create_date = create_date.substring(0, create_date.indexOf("+"))
-                console.log('origin date: ', create_date)
-                // 2018-05-07 05:03:04
+
+                // local端使用
+                // console.log('origin date: ', req.body.create_date)
+                // let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format()
+                // create_date = create_date.replace(/T/g, " ");
+                // create_date = create_date.substring(0, create_date.indexOf("+"))
+                // console.log('origin date: ', create_date)
+
                 const updateData = {
                     facebook_id: req.query.id,
                     speaker: req.body.speaker,
@@ -103,7 +105,7 @@ module.exports = class SpeechModifyMethod {
                     link: checkLink,
                     class: req.body.class,
                     class_img: req.body.class_img,
-                    create_date
+                    create_date: req.body.create_date
                     // update_date: onTime()
                 }
 
@@ -144,14 +146,17 @@ module.exports = class SpeechModifyMethod {
                 // res.redirect(config.development.testURL + '/#/');
             } else {
 
-                let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format()
-                create_date = create_date.replace(/T/g, " ");
-                create_date = create_date.substring(0, create_date.indexOf("+"))
+                // local端使用
+                // console.log('origin date: ', req.body.create_date)
+                // let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format()
+                // create_date = create_date.replace(/T/g, " ");
+                // create_date = create_date.substring(0, create_date.indexOf("+"))
+                // console.log('origin date: ', create_date)
 
                 //若成功
                 const deleteData = {
                     facebook_id: req.query.id,
-                    create_date
+                    create_date: req.body.create_date
                 }
                 deleteSpeech(deleteData).then((result) => {
                     res.json({
