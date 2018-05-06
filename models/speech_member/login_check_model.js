@@ -19,6 +19,11 @@ module.exports = loginCheck = (loginData) => {
         speaker: loginData.displayName
       }
 
+      console.log('id: ', loginData.facebook_id)
+      console.log('run update speech table.')
+
+      console.log('updateSpeechData: ', updateSpeechData)
+
       // 更新speech table中，所有登入講者的大頭貼
       await db.query('UPDATE speech SET ? WHERE facebook_id = ?', [updateSpeechData, loginData.facebook_id], (err, rows) => {
         if (err) {
@@ -35,23 +40,28 @@ module.exports = loginCheck = (loginData) => {
         email: loginData.email
       }
 
+      console.log('run update speech_member table.')
+      console.log('updateSpeechMemberData: ', updateSpeechMemberData)
+
       // 更改speech_member table中的資料
       await db.query('UPDATE speech_member SET ? WHERE facebook_id =?', [updateSpeechMemberData, loginData.facebook_id], (err, rows) => {
         if (err) {
           console.log(err)
           reject('伺服器錯誤，請稍後再試！')
         }
+        resolve('舊會員登入成功')
       })
-      resolve('舊會員登入成功')
     } else if (checkRegisterResult === false) {
+
+      console.log('run new member')
 
       await db.query('INSERT INTO speech_member SET ?', loginData, (err, rows) => {
         if (err) {
           console.log(err)
           reject('伺服器錯誤，請稍後再試！')
         }
+        resolve('新會員登入成功')
       })
-      resolve('新會員登入成功')
     }
 
     // DynamoDB
