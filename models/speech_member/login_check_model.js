@@ -132,6 +132,7 @@ function checkRegister(id) {
       if (err) {
         console.log(err)
         reject('伺服器錯誤，請稍後再試！')
+        return
       }
       if (rows.length >= 1) {
         resolve(true)
@@ -148,6 +149,7 @@ function updateSpeechTable (updateSpeechData, id) {
       if (err) {
         console.log(err)
         reject('伺服器錯誤，請稍後再試！')
+        return
       }
       resolve('更改speechTable成功')
     })
@@ -160,6 +162,7 @@ function updateSpeechMemberTable(updateSpeechMemberData, id) {
       if (err) {
         console.log(err)
         reject('伺服器錯誤，請稍後再試！')
+        return
       }
       resolve('更改speechMemberTable成功')
     })
@@ -172,6 +175,7 @@ function registerNewMember(loginData) {
       if (err) {
         console.log(err)
         reject('伺服器錯誤，請稍後再試！')
+        return
       }
       resolve('新增新會員成功')
     })

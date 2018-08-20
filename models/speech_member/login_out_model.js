@@ -17,6 +17,7 @@ module.exports = loginOutToken = (id) =>{
                 result.status = '登出失敗'
                 result.err = '伺服器錯誤，請稍後再試'
                 reject(result)
+                return
             }
             result.status = '登出成功'
             resolve(result)

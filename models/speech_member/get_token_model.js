@@ -3,6 +3,7 @@
 const db = require('../db_connect');
 
 module.exports = getToken = (id) => {
+    console.log('====the search id : ', id)
     return new Promise((resolve, reject) => {
         //資料庫取得資料的動作
         let result = {}
@@ -12,7 +13,9 @@ module.exports = getToken = (id) => {
                 result.status = '取得token失敗'
                 result.err = '伺服器錯誤，請稍後再試'
                 reject(result)
+                return
             }
+            console.log('rows: ', rows[0])
             resolve(rows[0].token)
         })
         //DynamoDB

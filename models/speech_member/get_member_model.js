@@ -14,6 +14,7 @@ module.exports = class GetSpeechMember {
                     result.status = '取得會員結果失敗'
                     result.err = '伺服器錯誤，請稍後再試'
                     reject(result)
+                    return
                 }
                 resolve(rows[0])
             })
@@ -44,6 +45,7 @@ module.exports = class GetSpeechMember {
                     result.status = '取得單一會員結果失敗'
                     result.err = '伺服器錯誤，請稍後再試'
                     reject(result)
+                    return
                 }
                 resolve(rows[0])
             })

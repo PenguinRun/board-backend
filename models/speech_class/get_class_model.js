@@ -13,6 +13,7 @@ module.exports = getSpeechClass = () => {
                 result.status = '取得活動分類結果失敗'
                 result.err = '伺服器錯誤，請稍後再試'
                 reject(result)
+                return
             }
             resolve(rows)
         })
