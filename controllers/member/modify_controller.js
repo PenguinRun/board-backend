@@ -11,7 +11,6 @@ module.exports = class ModifyMember {
     //登入
     async redirectMemberLogin(req, res, next) {
         const userId = req.query.id;
-        console.log('===userId: ', userId)
         //若無oatuh session，則只取token。
         if (userId !== undefined) {
             console.log('===run get token')

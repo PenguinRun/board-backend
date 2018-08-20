@@ -5,8 +5,6 @@ const db = require('../db_connect');
 module.exports = deleteSpeech = (deleteData) => {
     return new Promise((resolve, reject) => {
         //資料庫刪除資料的動作
-        console.log('deleteData id: ', deleteData.facebook_id)
-        console.log('deleteData created: ', deleteData.create_date)
         let result = {}
         db.query('DELETE FROM speech WHERE facebook_id = ? and create_date = ?', [deleteData.facebook_id, deleteData.create_date], (err, rows) => {
             if (err) {

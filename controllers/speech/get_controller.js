@@ -11,7 +11,6 @@ module.exports = class SpeechGetMethod {
     getSpeechData(req, res, next) {
         //登入判斷
         const token = req.headers['x-access-token'];
-        console.log('=====getSpeechData token : ', token)
         //確定token是否輸入
         const checkSomething = new CheckSomething();
         if (checkSomething.checkNull(token) === false) {
@@ -28,7 +27,6 @@ module.exports = class SpeechGetMethod {
                 return;
             } else {
                 getSpeech().then((result) => {
-                    console.log('mutiple result = : ', result)
                     result.map(element => {
                         delete element.id
                         element.id = element.facebook_id

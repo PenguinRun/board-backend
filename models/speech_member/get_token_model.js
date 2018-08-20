@@ -3,7 +3,6 @@
 const db = require('../db_connect');
 
 module.exports = getToken = (id) => {
-    console.log('====the search id : ', id)
     return new Promise((resolve, reject) => {
         //資料庫取得資料的動作
         let result = {}
