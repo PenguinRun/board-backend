@@ -10,6 +10,8 @@ module.exports = getSpeech = () => {
                 console.log(err)
                 result.status = '取得活動結果失敗'
                 result.err = '伺服器錯誤，請稍後再試'
+                reject(result)
+                return
             }
             resolve(rows)
         })

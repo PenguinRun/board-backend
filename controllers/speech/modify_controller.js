@@ -106,6 +106,8 @@ module.exports = class SpeechModifyMethod {
                     class: req.body.class,
                     class_img: req.body.class_img,
                     create_date: req.body.create_date
+                    // 測試用
+                    // create_date
                     // update_date: onTime()
                 }
 
@@ -147,16 +149,18 @@ module.exports = class SpeechModifyMethod {
             } else {
 
                 // local端使用
-                // console.log('origin date: ', req.body.create_date)
+                console.log('origin date: ', req.body.create_date)
                 let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format()
                 create_date = create_date.replace(/T/g, " ");
                 create_date = create_date.substring(0, create_date.indexOf("+"))
-                // console.log('origin date: ', create_date)
+                console.log('after date: ', create_date)
 
                 //若成功
                 const deleteData = {
                     facebook_id: req.query.id,
                     create_date: req.body.create_date
+                    // 測試用
+                    // create_date
                 }
                 deleteSpeech(deleteData).then((result) => {
                     res.json({

@@ -4,6 +4,7 @@
 const db = require('../db_connect');
 
 module.exports = loginCheck = (loginData) => {
+  console.log('=====login data: ', loginData)
   return new Promise(async (resolve, reject) => {
     // console.log("loginData: " + JSON.stringify(loginData));
 
@@ -25,7 +26,6 @@ module.exports = loginCheck = (loginData) => {
         photos: loginData.photos,
         displayName: loginData.displayName,
         token: loginData.token,
-        gender: loginData.gender,
         email: loginData.email
       }
 

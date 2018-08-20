@@ -13,6 +13,7 @@ module.exports = updateSpeech = (updateData) => {
                 result.status = '更新活動結果失敗'
                 result.err = '伺服器錯誤，請稍後再試'
                 reject(result)
+                return
             }
             result.status = '更新活動結果成功'
             resolve(result)
