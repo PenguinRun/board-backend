@@ -6,8 +6,8 @@ module.exports = class Passport {
     //進行facebook使用權限確認
     authenticate(req, res, next) {
         return passport.authenticate('facebook', {
-            authType: 'rerequest',
-            scope: ['public_profile']
+            authType: 'rerequest'
+            // scope: ['public_profile']
         })
     }
     //進行認證確認

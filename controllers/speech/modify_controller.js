@@ -90,9 +90,9 @@ module.exports = class SpeechModifyMethod {
 
                 // local端使用
                 // console.log('origin date: ', req.body.create_date)
-                // let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format()
-                // create_date = create_date.replace(/T/g, " ");
-                // create_date = create_date.substring(0, create_date.indexOf("+"))
+                let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format()
+                create_date = create_date.replace(/T/g, " ");
+                create_date = create_date.substring(0, create_date.indexOf("+"))
                 // console.log('origin date: ', create_date)
 
                 const updateData = {
@@ -148,9 +148,9 @@ module.exports = class SpeechModifyMethod {
 
                 // local端使用
                 // console.log('origin date: ', req.body.create_date)
-                // let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format()
-                // create_date = create_date.replace(/T/g, " ");
-                // create_date = create_date.substring(0, create_date.indexOf("+"))
+                let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format()
+                create_date = create_date.replace(/T/g, " ");
+                create_date = create_date.substring(0, create_date.indexOf("+"))
                 // console.log('origin date: ', create_date)
 
                 //若成功

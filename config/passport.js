@@ -7,9 +7,10 @@ var Strategy = require('passport-facebook').Strategy;
 passport.use(new Strategy({
     clientID: config.development.fb.number,
     clientSecret: config.development.fb.key,
-    callbackURL: config.production.URL + '/api/speechmember/login/facebook/return',
-    // callbackURL: config.development.testURL + '/api/speechmember/login/facebook/return',
-    profileFields: ['id', 'displayName', 'email', 'photos', 'gender']
+    // callbackURL: config.production.URL + '/api/speechmember/login/facebook/return',
+    callbackURL: config.development.testURL + '/api/speechmember/login/facebook/return',
+    // profileFields: ['id', 'displayName', 'email', 'photos', 'gender']
+    profileFields: ['id', 'displayName', 'email', 'photos']
   },
   function(accessToken, refreshToken, profile, cb) {
     // In this example, the user's Facebook profile is supplied as the user
@@ -24,7 +25,7 @@ passport.use(new Strategy({
       email: profile._json.email,
       name: profile._json.name,
       photos: profile._json.picture.data.url,
-      gender: profile._json.gender,
+      // gender: profile._json.gender,
       profile: profile
     }
     // console.log(obj);

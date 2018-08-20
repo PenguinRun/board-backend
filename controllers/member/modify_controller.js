@@ -26,7 +26,7 @@ module.exports = class ModifyMember {
             const email = req.session.passport.user.email;
             const displayName = req.session.passport.user.name;
             const photos = req.session.passport.user.photos;
-            const gender = req.session.passport.user.gender;
+            // const gender = req.session.passport.user.gender;
             const accessToken = req.session.passport.user.accessToken;
 
             // console.log("accessToken: " + accessToken);
@@ -75,14 +75,14 @@ module.exports = class ModifyMember {
                 email: email,
                 displayName: displayName,
                 photos: await getImgurURL(fbPictureURL),
-                gender: gender,
+                // gender: gender,
                 token: token,
                 create_date: onTime()
             }
             // console.log(loginData);
             loginCheck(loginData).then((result) => {
-                res.redirect(config.production.URL + '/goodideabillboard/backstage/#/home/?id=' + id);
-                // res.redirect('http://localhost:8000/#/home/?id=' + id);
+                // res.redirect(config.production.URL + '/goodideabillboard/backstage/#/home/?id=' + id);
+                res.redirect('http://localhost:8000/#/home/?id=' + id);
             }, (err) => {
                 console.log(err)
             });
