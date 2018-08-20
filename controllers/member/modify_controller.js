@@ -7,21 +7,18 @@ const request = require('request');
 const jwt = require('jsonwebtoken');
 
 const config = require('../../config/config');
-
 module.exports = class ModifyMember {
     //登入
     async redirectMemberLogin(req, res, next) {
-        console.log('=====passport status: ' , req.session.passport)
-        console.log('=====type passport: ', typeof req.session.passport)
+        const userId = req.query.id;
+        console.log('===userId: ', userId)
         //若無oatuh session，則只取token。
-        if (req.session.passport === undefined) {
-            const id = req.query.id;
+        if (userId !== undefined) {
             console.log('===run get token')
-            getToken(id).then((token) => {
+            getToken(userId).then((token) => {
                 res.header('x-access-token', token);
                 res.end();
             })
-
         } else {
             //若有oauth session，則進行自動註冊確認。
             const id = req.session.passport.user.id;
