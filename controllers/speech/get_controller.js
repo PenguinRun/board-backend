@@ -11,7 +11,7 @@ module.exports = class SpeechGetMethod {
     getSpeechData(req, res, next) {
         //登入判斷
         const token = req.headers['x-access-token'];
-        conosle.log('=====getSpeechData token : ', token)
+        console.log('=====getSpeechData token : ', token)
         //確定token是否輸入
         const checkSomething = new CheckSomething();
         if (checkSomething.checkNull(token) === false) {
