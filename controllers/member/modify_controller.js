@@ -81,8 +81,8 @@ module.exports = class ModifyMember {
             }
             // console.log(loginData);
             loginCheck(loginData).then((result) => {
-                // res.redirect(config.production.URL + '/goodideabillboard/backstage/#/home/?id=' + id);
-                res.redirect('http://localhost:8000/#/home/?id=' + id);
+                res.redirect(config.production.URL + '/goodideabillboard/backstage/#/home/?id=' + id);
+                // res.redirect('http://localhost:8000/#/home/?id=' + id);
             }, (err) => {
                 console.log(err)
             });
