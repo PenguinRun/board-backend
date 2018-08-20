@@ -11,10 +11,11 @@ const config = require('../../config/config');
 module.exports = class ModifyMember {
     //登入
     async redirectMemberLogin(req, res, next) {
+        console.log('=====passport status: ' , req.session.passport)
         //若無oatuh session，則只取token。
         if (req.session.passport === undefined) {
             const id = req.query.id;
-
+            console.log('===run get token')
             getToken(id).then((token) => {
                 res.header('x-access-token', token);
                 res.end();
