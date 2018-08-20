@@ -12,6 +12,7 @@ module.exports = class ModifyMember {
     //登入
     async redirectMemberLogin(req, res, next) {
         console.log('=====passport status: ' , req.session.passport)
+        console.log('=====type passport: ', typeof req.session.passport)
         //若無oatuh session，則只取token。
         if (req.session.passport === undefined) {
             const id = req.query.id;
