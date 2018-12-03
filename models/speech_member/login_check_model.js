@@ -13,9 +13,9 @@ module.exports = loginCheck = (loginData) => {
     const checkRegisterResult = await checkRegister(loginData.facebook_id)
     console.log('checkRegisterResult: ', checkRegisterResult)
 
-    if (checkRegisterResult === true) {
+    if (checkRegisterResult !== false) {
       const updateSpeechData = {
-        speaker_img: loginData.photos,
+        speaker_img: loginData.photos || checkRegisterResult,
         speaker: loginData.displayName
       }
 
@@ -23,7 +23,7 @@ module.exports = loginCheck = (loginData) => {
       // await updateSpeechTable(updateSpeechData, loginData.facebook_id)
 
       let updateSpeechMemberData = {
-        photos: loginData.photos,
+        photos: loginData.photos || checkRegisterResult,
         displayName: loginData.displayName,
         token: loginData.token,
         email: loginData.email
@@ -136,7 +136,7 @@ function checkRegister(id) {
       }
       if (rows.length >= 1) {
         console.log('==rows: ', rows)
-        resolve(true)
+        resolve(rows[0].RowDataPacket.photos)
       } else {
         resolve(false)
       }

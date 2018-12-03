@@ -77,7 +77,7 @@ module.exports = class ModifyMember {
                 facebook_id: id,
                 email: email,
                 displayName: displayName,
-                photos: await getImgurURL(fbPictureURL) || '',
+                photos: await getImgurURL(fbPictureURL) || false,
                 // gender: gender,
                 token: token,
                 create_date: onTime()
