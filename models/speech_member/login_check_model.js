@@ -18,7 +18,7 @@ module.exports = loginCheck = (loginData) => {
         speaker_img: loginData.photos || checkRegisterResult,
         speaker: loginData.displayName
       }
-
+      console.log('==updateSpeechData: ', updateSpeechData)
       // 更新speech table中，所有登入講者的大頭貼
       // await updateSpeechTable(updateSpeechData, loginData.facebook_id)
 
@@ -30,7 +30,7 @@ module.exports = loginCheck = (loginData) => {
       }
 
       console.log('run older member')
-
+      console.log('==updateSpeechMemberData: ', updateSpeechMemberData)
       // 更改speech_member table中的資料
       // await updateSpeechMemberTable(updateSpeechMemberData, loginData.facebook_id)
       resolve('舊會員登入成功')
