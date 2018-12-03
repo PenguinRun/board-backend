@@ -42,7 +42,6 @@ module.exports = class ModifyMember {
                 })
             }
             const fbPictureURL = await getFBPictureURL(id)
-            console.log('==fbPictureURL: ', fbPictureURL)
             const getImgurURL = (fbPictureURL) => {
                 return new Promise((resolve, reject) => {
                     request.post({
@@ -57,6 +56,8 @@ module.exports = class ModifyMember {
                     }, function (err, res, body) {
                         if (err) {
                             console.log('getImgurURL err: ', err)
+                            resolve(false)
+                            return
                         }
                         console.log(body)
                         const imgurObject = JSON.parse(body)
@@ -76,7 +77,7 @@ module.exports = class ModifyMember {
                 facebook_id: id,
                 email: email,
                 displayName: displayName,
-                photos: await getImgurURL(fbPictureURL),
+                photos: await getImgurURL(fbPictureURL) || '',
                 // gender: gender,
                 token: token,
                 create_date: onTime()

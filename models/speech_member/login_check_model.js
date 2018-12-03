@@ -20,9 +20,9 @@ module.exports = loginCheck = (loginData) => {
       }
 
       // 更新speech table中，所有登入講者的大頭貼
-      await updateSpeechTable(updateSpeechData, loginData.facebook_id)
+      // await updateSpeechTable(updateSpeechData, loginData.facebook_id)
 
-      const updateSpeechMemberData = {
+      let updateSpeechMemberData = {
         photos: loginData.photos,
         displayName: loginData.displayName,
         token: loginData.token,
@@ -32,7 +32,7 @@ module.exports = loginCheck = (loginData) => {
       console.log('run older member')
 
       // 更改speech_member table中的資料
-      await updateSpeechMemberTable(updateSpeechMemberData, loginData.facebook_id)
+      // await updateSpeechMemberTable(updateSpeechMemberData, loginData.facebook_id)
       resolve('舊會員登入成功')
     } else if (checkRegisterResult === false) {
 
@@ -127,7 +127,7 @@ module.exports = loginCheck = (loginData) => {
 
 function checkRegister(id) {
   return new Promise((resolve, reject) => {
-    db.query('SELECT facebook_id FROM speech_member WHERE facebook_id = ?', id, function (err, rows) {
+    db.query('SELECT facebook_id, photos FROM speech_member WHERE facebook_id = ?', id, function (err, rows) {
       // 若資料庫部分出現問題，則回傳給client端「伺服器錯誤，請稍後再試！」的結果。
       if (err) {
         console.log(err)
@@ -135,6 +135,7 @@ function checkRegister(id) {
         return
       }
       if (rows.length >= 1) {
+        console.log('==rows: ', rows)
         resolve(true)
       } else {
         resolve(false)
