@@ -135,8 +135,7 @@ function checkRegister(id) {
         return
       }
       if (rows.length >= 1) {
-        console.log('==rows: ', rows)
-        resolve(rows[0].RowDataPacket.photos)
+        resolve(rows[0].photos)
       } else {
         resolve(false)
       }
