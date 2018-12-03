@@ -42,6 +42,7 @@ module.exports = class ModifyMember {
                 })
             }
             const fbPictureURL = await getFBPictureURL(id)
+            console.log('==fbPictureURL: ', fbPictureURL)
             const getImgurURL = (fbPictureURL) => {
                 return new Promise((resolve, reject) => {
                     request.post({
