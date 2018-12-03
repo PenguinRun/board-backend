@@ -54,7 +54,10 @@ module.exports = class ModifyMember {
                             'image': fbPictureURL
                         }
                     }, function (err, res, body) {
-                        // console.log(body)
+                        if (err) {
+                            console.log('getImgurURL err: ', err)
+                        }
+                        console.log(body)
                         const imgurObject = JSON.parse(body)
                         resolve(imgurObject.data.link)
                     })
