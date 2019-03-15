@@ -105,9 +105,9 @@ module.exports = class SpeechModifyMethod {
                     link: checkLink,
                     class: req.body.class,
                     class_img: req.body.class_img,
-                    create_date: req.body.create_date
+                    // create_date: req.body.create_date
                     // 測試用
-                    // create_date
+                    create_date
                     // update_date: onTime()
                 }
 
@@ -158,9 +158,9 @@ module.exports = class SpeechModifyMethod {
                 //若成功
                 const deleteData = {
                     facebook_id: req.query.id,
-                    create_date: req.body.create_date
+                    // create_date: req.body.create_date
                     // 測試用
-                    // create_date
+                    create_date
                 }
                 deleteSpeech(deleteData).then((result) => {
                     res.json({
