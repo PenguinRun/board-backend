@@ -33,7 +33,8 @@ module.exports = class SpeechModifyMethod {
                 if (checkLink === "") {
                     checkLink = null
                 }
-                let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format()
+                let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+                console.log('normal after date: ', create_date)
                 const insertData = {
                     facebook_id: req.query.id,
                     speaker: req.body.speaker,
@@ -91,7 +92,8 @@ module.exports = class SpeechModifyMethod {
 
                 // local端使用
                 // console.log('origin date: ', req.body.create_date)
-                let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format()
+                let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+                console.log('update after date: ', create_date)
                 create_date = create_date.replace(/T/g, " ");
                 create_date = create_date.substring(0, create_date.indexOf("+"))
                 // console.log('origin date: ', create_date)
@@ -151,10 +153,10 @@ module.exports = class SpeechModifyMethod {
 
                 // local端使用
                 console.log('origin date: ', req.body.create_date)
-                let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format()
+                let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
                 create_date = create_date.replace(/T/g, " ");
                 create_date = create_date.substring(0, create_date.indexOf("+"))
-                console.log('after date: ', create_date)
+                console.log('remove after date: ', create_date)
 
                 //若成功
                 const deleteData = {
