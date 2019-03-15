@@ -48,7 +48,7 @@ module.exports = class SpeechModifyMethod {
                     create_date
                     // "update_date": null,
                 }
-                console.log('ontime: ', onTime())
+                // console.log('ontime: ', onTime())
                 createSpeech(insertData).then((result) => {
                     res.json({
                         result: result
@@ -94,8 +94,8 @@ module.exports = class SpeechModifyMethod {
                 // console.log('origin date: ', req.body.create_date)
                 let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
                 console.log('update after date: ', create_date)
-                create_date = create_date.replace(/T/g, " ");
-                create_date = create_date.substring(0, create_date.indexOf("+"))
+                // create_date = create_date.replace(/T/g, " ");
+                // create_date = create_date.substring(0, create_date.indexOf("+"))
                 // console.log('origin date: ', create_date)
 
                 const updateData = {
@@ -108,9 +108,9 @@ module.exports = class SpeechModifyMethod {
                     link: checkLink,
                     class: req.body.class,
                     class_img: req.body.class_img,
-                    create_date: req.body.create_date
+                    // create_date: req.body.create_date
                     // 測試用
-                    // create_date
+                    create_date
                     // update_date: onTime()
                 }
 
@@ -154,16 +154,16 @@ module.exports = class SpeechModifyMethod {
                 // local端使用
                 console.log('origin date: ', req.body.create_date)
                 let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-                create_date = create_date.replace(/T/g, " ");
-                create_date = create_date.substring(0, create_date.indexOf("+"))
+                // create_date = create_date.replace(/T/g, " ");
+                // create_date = create_date.substring(0, create_date.indexOf("+"))
                 console.log('remove after date: ', create_date)
 
                 //若成功
                 const deleteData = {
                     facebook_id: req.query.id,
-                    create_date: req.body.create_date
+                    // create_date: req.body.create_date
                     // 測試用
-                    // create_date
+                    create_date
                 }
                 deleteSpeech(deleteData).then((result) => {
                     res.json({
