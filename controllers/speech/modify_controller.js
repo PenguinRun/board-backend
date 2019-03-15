@@ -92,7 +92,7 @@ module.exports = class SpeechModifyMethod {
 
                 // local端使用
                 // console.log('origin date: ', req.body.create_date)
-                let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+                let create_date = moment(req.body.create_date).format('YYYY-MM-DD HH:mm:ss')
                 console.log('update after date: ', create_date)
                 // create_date = create_date.replace(/T/g, " ");
                 // create_date = create_date.substring(0, create_date.indexOf("+"))
@@ -153,7 +153,7 @@ module.exports = class SpeechModifyMethod {
 
                 // local端使用
                 console.log('origin date: ', req.body.create_date)
-                let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+                let create_date = moment(req.body.create_date).format('YYYY-MM-DD HH:mm:ss')
                 // create_date = create_date.replace(/T/g, " ");
                 // create_date = create_date.substring(0, create_date.indexOf("+"))
                 console.log('remove after date: ', create_date)
