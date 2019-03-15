@@ -7,7 +7,7 @@ const connection = mysql.createConnection({
   user: config.development.mysql.user,
   password: config.development.mysql.password,
   database: config.development.mysql.database,
-  // port: config.development.mysql.port
+  port: config.development.mysql.port
 });
 
 connection.connect(err => {
