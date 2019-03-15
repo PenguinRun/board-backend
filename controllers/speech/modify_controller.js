@@ -33,6 +33,7 @@ module.exports = class SpeechModifyMethod {
                 if (checkLink === "") {
                     checkLink = null
                 }
+                let create_date = moment.tz(req.body.create_date, 'Asia/Taipei').format()
                 const insertData = {
                     facebook_id: req.query.id,
                     speaker: req.body.speaker,
@@ -43,7 +44,7 @@ module.exports = class SpeechModifyMethod {
                     link: req.body.link,
                     class: req.body.class,
                     class_img: req.body.class_img,
-                    create_date: onTime(),
+                    create_date
                     // "update_date": null,
                 }
                 console.log('ontime: ', onTime())
@@ -105,9 +106,9 @@ module.exports = class SpeechModifyMethod {
                     link: checkLink,
                     class: req.body.class,
                     class_img: req.body.class_img,
-                    // create_date: req.body.create_date
+                    create_date: req.body.create_date
                     // 測試用
-                    create_date
+                    // create_date
                     // update_date: onTime()
                 }
 
@@ -158,9 +159,9 @@ module.exports = class SpeechModifyMethod {
                 //若成功
                 const deleteData = {
                     facebook_id: req.query.id,
-                    // create_date: req.body.create_date
+                    create_date: req.body.create_date
                     // 測試用
-                    create_date
+                    // create_date
                 }
                 deleteSpeech(deleteData).then((result) => {
                     res.json({
